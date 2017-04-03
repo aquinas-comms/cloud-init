@@ -1,0 +1,77 @@
+#cloud-config
+
+##########
+# The modules that run in the 'init' stage
+# - migrator
+# - ubuntu-init-switch
+# - seed_random
+# - bootcmd
+# - write-files
+# - growpart
+# - resizefs
+# - set_hostname
+# - update_hostname
+# - update_etc_hosts
+# - ca-certs
+# - rsyslog
+# - users-groups
+# - ssh
+
+##########
+# The modules that run in the 'config' stage
+# Emit the cloud config ready event (this can be used by upstart jobs for 'start on cloud-config')
+# - emit_upstart
+# - disk_setup
+# - mounts
+# - ssh-import-id
+# - locale
+# - set-passwords
+# - snappy
+# - grub-dpkg
+# - apt-pipelining
+# - apt-configure
+# - package-update-upgrade-install
+package-upgrade: true
+packages:
+  - apt-transport-https 
+  - ca-certificates
+  - curl
+  - python-software-properties
+  - software-properties-common
+# - fan
+# - landscape
+# - timezone
+timezone: America/Chicago
+# - lxd
+# - puppet
+# - chef
+# - salt-minion
+# - mcollective
+# - disable-ec2-metadata
+# - runcmd
+# add docker repo & install docker
+runcmd:
+  - curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+  - apt-key fingerprint 0EBFCD88
+  - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian  $(lsb_release -cs) stable"
+  - apt-get update; apt-get -y -q install docker-ce
+# - byobu
+
+##########
+# The modules that run in the 'final' stage
+# - rightscale_userdata
+# - scripts-vendor
+# - scripts-per-once
+# - scripts-per-boot
+# - scripts-per-instance
+# - scripts-user
+# - ssh-authkey-fingerprints
+# - keys-to-console
+# - phone-home
+# - final-message
+# - power-state-change
+
+
+
+
+
